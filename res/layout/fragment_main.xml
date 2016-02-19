@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/menu_space"
-        android:text="@string/hello_world" 
+        android:text="@string/long_app_name" 
         android:textAppearance="?android:textAppearanceLarge"
 		android:textSize="@dimen/menu_text_size"/>
 

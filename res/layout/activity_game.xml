@@ -1,0 +1,36 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TicTacToeActivity" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/space" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <fragment
+            android:id="@+id/fragment_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            class="tic.tactoe.GameFragment"
+            tools:layout="@layout/fragment_game" />
+       
+        <fragment
+            android:id="@+id/fragment_game_controls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            class="tic.tactoe.ControlFragment"
+            tools:layout="@layout/fragment_control" />
+        
+	</LinearLayout>
+
+</FrameLayout>

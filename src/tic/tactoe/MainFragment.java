@@ -6,6 +6,7 @@ package tic.tactoe;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,27 @@ public class MainFragment extends Fragment {
 							Bundle savedInstanceState){
 		View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 		// Handle buttons here
+		
+		// new game button
+		View newButton = rootView.findViewById(R.id.new_button);
+		newButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(),GameActivity.class);
+				getActivity().startActivity(intent);
+			}
+		});
+		
+		View continueButton = rootView.findViewById(R.id.continue_button);
+		continueButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), GameActivity.class);
+				intent.putExtra(GameActivity.KEY_RESTORE,  true);
+				getActivity().startActivity(intent);
+			}
+		});
+		
 		View aboutButton = rootView.findViewById(R.id.about_button);
 		aboutButton.setOnClickListener(new View.OnClickListener() {
 			@Override

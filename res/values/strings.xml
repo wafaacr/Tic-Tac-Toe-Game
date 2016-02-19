@@ -10,5 +10,9 @@
     <string name="ok_label">OK</string>
     <string name="about_title">About Tic Tac Toe</string>
     <string name="about_text">This game is played just like regular Tic Tac Toe with one difference</string>
+    <string name="restart_label">Restart</string>
+    <string name="main_menu_label">Main Menu</string>
+    <string name="declare_winner">%1$s is the winner</string>
+    <string name="long_app_name">Tic Tac Toe</string>
 
 </resources>

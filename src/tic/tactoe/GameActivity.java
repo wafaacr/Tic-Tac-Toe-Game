@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class GameActivity extends ActionBarActivity {
 
@@ -78,5 +79,15 @@ public class GameActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void startThinking() {
+		View thinkView = findViewById(R.id.thinking);
+		thinkView.setVisibility(View.VISIBLE);
+	}
+
+	public void stopThinking() {
+		View thinkView = findViewById(R.id.thinking);
+		thinkView.setVisibility(View.GONE);
 	}
 }

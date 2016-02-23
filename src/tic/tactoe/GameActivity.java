@@ -4,7 +4,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +17,17 @@ public class GameActivity extends ActionBarActivity {
 	public static final String KEY_RESTORE = "key_restore";
 	public static final String PREF_RESTORE = "pref_restore";
 	private GameFragment mGameFragment;
+	
+	private MediaPlayer mMediaPlayer;
+	private Handler mHandler = new Handler();
+	
+	protected void onResume(){
+		super.onResume();
+		mMediaPlayer = MediaPlayer.create(this, R.raw.power_juice);
+		mMediaPlayer.setLooping(true);
+		mMediaPlayer.start();
+	}
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +48,15 @@ public class GameActivity extends ActionBarActivity {
 	
 	@Override
 	protected void onPause() {
+		
 		super.onPause();
+		mHandler.removeCallbacks(null);
+		mMediaPlayer.stop();
+		mMediaPlayer.reset();
+		mMediaPlayer.release();
 		String gameData = mGameFragment.getState();
 		getPreferences(MODE_PRIVATE).edit().putString(PREF_RESTORE, gameData).commit();
-		Log.d("UT3", "restore = " + gameData);
+		Log.d("UT3", "state = " + gameData);
 	}
 	
 	public void restartGame(){
@@ -47,6 +65,11 @@ public class GameActivity extends ActionBarActivity {
 	
 	public void reportWinner(final Tile.Owner winner){
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		if(mMediaPlayer != null && mMediaPlayer.isPlaying()){
+			mMediaPlayer.stop();
+			mMediaPlayer.reset();
+			mMediaPlayer.release();
+		}
 		builder.setMessage(getString(R.string.declare_winner,winner));
 		builder.setCancelable(false);
 		builder.setPositiveButton(R.string.ok_label, new DialogInterface.OnClickListener() {		
@@ -56,7 +79,17 @@ public class GameActivity extends ActionBarActivity {
 			}
 		});
 		final Dialog dialog = builder.create();
-		dialog.show();
+		mHandler.postDelayed(new Runnable(){
+			public void run(){
+				mMediaPlayer = MediaPlayer.create(GameActivity.this,
+						winner == Tile.Owner.X ? R.raw.magic_wand_1
+								: winner == Tile.Owner.O ? R.raw.beep
+								: R.raw.magic_wand_1
+				);
+				mMediaPlayer.start();
+				dialog.show();
+			}
+		}, 500);
 		
 		// Reset the board to the initial position
 		mGameFragment.initGame();

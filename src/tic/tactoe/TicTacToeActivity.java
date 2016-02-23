@@ -1,12 +1,29 @@
 package tic.tactoe;
 
 import android.support.v7.app.ActionBarActivity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class TicTacToeActivity extends ActionBarActivity {
 
+	MediaPlayer mMediaPlayer;
+	protected void onResume(){
+		super.onResume();
+		mMediaPlayer = MediaPlayer.create(this, R.raw.lovers_walk);
+		mMediaPlayer.setVolume(0.5f, 0.5f);
+		mMediaPlayer.setLooping(true);
+		mMediaPlayer.start();
+	}
+	
+	protected void onPause(){
+		super.onPause();
+		mMediaPlayer.stop();
+		mMediaPlayer.reset();
+		mMediaPlayer.release();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

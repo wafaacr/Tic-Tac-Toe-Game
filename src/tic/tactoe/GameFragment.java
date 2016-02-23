@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.app.Fragment;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,6 +17,11 @@ import android.widget.ImageButton;
 public class GameFragment extends Fragment {
 
 	// Data structures
+	private int mSoundX, mSoundO;
+	private SoundPool mSoundPool;
+	private float mVolume = 1f;
+	
+	
 	private Handler mHandler = new Handler();
 	static private int mLargeIds[] = {R.id.large1,R.id.large2,R.id.large3,R.id.large4,R.id.large5,R.id.large6,R.id.large7,R.id.large8,R.id.large9,};
 	static private int mSmallIds[] = {R.id.small1,R.id.small2,R.id.small3,R.id.small4,R.id.small5,R.id.small6,R.id.small7,R.id.small8,R.id.small9,};
@@ -33,6 +40,9 @@ public class GameFragment extends Fragment {
 		// Retain this fragment across configuration changes
 		setRetainInstance(true);
 		initGame();
+		mSoundPool = new SoundPool(3,AudioManager.STREAM_MUSIC,0);
+		mSoundX = mSoundPool.load(getActivity(), R.raw.beep, 1);
+		mSoundO = mSoundPool.load(getActivity(), R.raw.beep, 1);
 	}
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState){
@@ -123,11 +133,14 @@ public class GameFragment extends Fragment {
 					@Override
 					public void onClick(View v) {
 						if(isAvailable(smallTile)){
+							mSoundPool.play(mSoundX, mVolume, mVolume, 1, 0, 1f);
 							makeMove(fLarge,fSmall);
 							//switchTurns();
 							think();
 						}
-						
+						else{
+							mSoundPool.play(mSoundX, mVolume, mVolume, 1, 0, 1f);
+						}
 					}
 				});
 			}
